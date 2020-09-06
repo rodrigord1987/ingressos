@@ -1,0 +1,40 @@
+<button
+  type="button"
+  class="btn btn-primary"
+  routerLink="new">Novo</button>
+
+  {{ erro }}
+
+<table class="table">
+  <thead>
+    <tr>
+      <th>Titulo</th>
+      <th>Cartaz</th>
+      <th>Genero</th>
+      <th>Opções</th>
+    </tr>
+  </thead>
+  <tbody>
+    <tr *ngFor="let filme of filmes; let i = index">
+      <td>{{ filme.titulo | resumo : 50 }}</td>
+      <td>{{ filme.cartaz }}</td>
+      <td>{{ filme.genero }}</td>
+      <td>
+        <button
+          type="button"
+          class="btn btn-default"
+          [routerLink]="[ filme.$key ]">Detalhar</button>
+        
+        <button
+          type="button"
+          class="btn btn-primary"
+          [routerLink]="[ filme.$key, 'edit' ]">Editar</button>
+
+        <button
+          type="button"
+          class="btn btn-danger"
+          (click)="onDelete(i)">Excluir</button>
+      </td>
+    </tr>
+  </tbody>
+</table>

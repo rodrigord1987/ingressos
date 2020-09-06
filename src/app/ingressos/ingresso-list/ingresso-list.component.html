@@ -1,0 +1,75 @@
+<p [appHighlight]="{ background: 'blue'}">{{ mensagem }}</p>
+
+<div class="row col-sm-12">
+    <button
+        type="button"
+        routerLink="new"
+        class="btn btn-primary">Novo</button>
+</div>
+
+<div class="form-group col-sm-6">
+    <label for="search" class="control-label">Pesquisar</label>
+    <div class="input-group">
+        <input
+            type="text"
+            id="search"
+            name="search"
+            class="form-control"
+            [(ngModel)]="searchText">
+        <div class="input-group-btn">
+            <button
+                type="button"
+                class="btn btn-default"
+                (click)="search()">Pesquisar</button>
+        </div>
+    </div>
+</div>
+
+<table class="table" *ngIf="ingressos.length > 0; else semIngresso">
+    <thead>
+        <tr>
+            <th>Filme</th>
+            <th>Preço</th>
+            <th>Sala</th>
+            <th>Data</th>
+            <th>Horário</th>
+            <th>Quantidade</th>
+            <th>Opções</th>
+        </tr>
+    </thead>
+    <tbody>
+        <tr *ngFor="let ingresso of ingressos; let i = index">
+            <td>{{ ingresso.titulo | uppercase | semVogais }}</td>
+            <td>{{ ingresso.preco | currency : 'BRL': true }}</td>
+            <td>{{ ingresso.sala }}</td>
+            <td>{{ ingresso.data | date : 'dd/MM/yyyy' }}</td>
+            <td>{{ ingresso.horario }}</td>
+            <td>{{ ingresso.quantidade }}</td>
+            <td>
+                <button 
+                    type="button"
+                    class="btn btn-default"
+                    [routerLink]="[i]">Detalhar</button>
+
+                <button 
+                    type="button"
+                    class="btn btn-info"
+                    [routerLink]="[i, 'edit']">Editar</button>
+                    
+                <button 
+                    type="button"
+                    class="btn btn-danger"
+                    (click)="onDelete(i)">Remover</button>
+            </td>
+        </tr>
+    </tbody>
+</table>
+<ng-template #semIngresso>
+    <p>Nenhum ingresso disponível</p>
+</ng-template>
+
+<div class="row">
+    <div class="col-sm-offset-4 col-sm-4">
+        <router-outlet></router-outlet>
+    </div>
+</div>
